@@ -1,11 +1,14 @@
 const router = require('express').Router();
-const { sequelize } = require('../config/database');
+const { db } = require('../config/database');
 
-// POST /test/reset – drop & recreate schema
+// POST /test/reset – drop collections
 // Used to reset the database between tests
 router.post('/reset', async (req, res) => {
   try {
-    await sequelize.sync({ force: true });
+    const collections = db.collections;
+    for (const key in collections) {
+      await collections[key].deleteMany({});
+    }
     return res.status(200).json({ ok: true });
   } catch (err) {
     console.error('TEST RESET failed:', err);

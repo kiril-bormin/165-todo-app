@@ -1,5 +1,3 @@
-const mongoose = require('mongoose');
-
 const UserModel = require('./user.model');
 const TodoModel = require('./todo.model');
 
