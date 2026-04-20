@@ -54,8 +54,6 @@ async function initApp(options = {}) {
 
   const theApp = createApp();
 
-  await db.authenticate();
-
   // Initialize all models & expose to controllers
   const models = initModels(db);
   theApp.locals.models = models;
