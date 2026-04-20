@@ -18,10 +18,10 @@ if (isTest) {
 }
 
 if (!isTest) {
-  redisClient = redis.createClient({
-    url: `redis://:${process.env.REDIS_PASSWORD}@localhost:6379`
-  });
-  redisClient.connect().catch(console.error);
+  // redisClient = redis.createClient({
+  //   url: `redis://:${process.env.REDIS_PASSWORD}@localhost:6379`
+  // });
+  // redisClient.connect().catch(console.error);
 }
 
 module.exports = {

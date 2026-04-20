@@ -120,7 +120,9 @@ const TodoController = {
       const result = await Todo.find({
         user_id: user_id,
         $text: { $search: query }
-      }).sort({ date: 1 }).select('-user_id');
+      })
+        .sort({ date: 1 })
+        .select('-user_id');
 
       if (result) {
         if (redisClient) {
