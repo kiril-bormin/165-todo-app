@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 // Load env vars
 process.loadEnvFile('./.env');
 
-const { sequelize: db } = require('./config/database');
+const { db, redisClient } = require('./config/database');
 const { initModels } = require('./models');
 const router = require('./routes');
 
@@ -59,9 +59,9 @@ async function initApp(options = {}) {
   // Initialize all models & expose to controllers
   const models = initModels(db);
   theApp.locals.models = models;
+  theApp.locals.redisClient = redisClient;
 
-  // Sync schema (or run migrations if you prefer)
-  await db.sync();
+  // No sync needed for MongoDB
 
   if (listen) {
     server = theApp.listen(port, () => {

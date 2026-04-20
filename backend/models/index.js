@@ -1,11 +1,11 @@
-const { DataTypes } = require('sequelize');
+const mongoose = require('mongoose');
 
 const UserModel = require('./user.model');
 const TodoModel = require('./todo.model');
 
-function initModels(sequelize) {
-  const User = UserModel(sequelize, DataTypes);
-  const Todo = TodoModel(sequelize, DataTypes);
+function initModels(db) {
+  const User = db.model('User', UserModel);
+  const Todo = db.model('Todo', TodoModel);
 
   return { User, Todo };
 }
