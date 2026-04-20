@@ -19,7 +19,9 @@ if (isTest) {
 
 if (!isTest) {
   redisClient = redis.createClient({
-    url: `redis://:${process.env.REDIS_PASSWORD}@localhost:6379`
+    host: 'localhost',
+    port: 6379,
+    password: process.env.REDIS_PASSWORD
   });
   redisClient.connect().catch(console.error);
 }

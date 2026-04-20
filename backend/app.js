@@ -57,7 +57,7 @@ async function initApp(options = {}) {
   // Initialize all models & expose to controllers
   const models = initModels(db);
   theApp.locals.models = models;
-  theApp.locals.redisClient = null;
+  theApp.locals.redisClient = redisClient;
 
   // No sync needed for MongoDB
 

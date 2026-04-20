@@ -1,14 +1,10 @@
 const router = require('express').Router();
-const { db } = require('../config/database');
 
-// POST /test/reset – drop collections
-// Used to reset the database between tests
 router.post('/reset', async (req, res) => {
   try {
-    const collections = db.collections;
-    for (const key in collections) {
-      await collections[key].deleteMany({});
-    }
+    const { User, Todo } = req.app.locals.models;
+    await User.deleteMany({});
+    await Todo.deleteMany({});
     return res.status(200).json({ ok: true });
   } catch (err) {
     console.error('TEST RESET failed:', err);
