@@ -15,9 +15,7 @@ if (isTest) {
   }
   // Assuming DB_URL is MongoDB connection string
   db = mongoose.createConnection(process.env.DB_URL);
-}
 
-if (!isTest) {
   redisClient = redis.createClient({
     host: 'localhost',
     port: 6379,

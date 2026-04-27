@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const jsonwebtoken = require('jsonwebtoken');
 
-const { JWT_SECRET } = require('../config/keys');
+const { JWT_SECRET, JWT_PRIVATE_KEY } = require('../config/keys');
 
 // remove password from user object
 const cleanUser = (user) => {
@@ -18,7 +18,7 @@ const AuthController = {
       if (result) {
         if (bcrypt.compareSync(req.body.password, result.password)) {
           const user = cleanUser(result);
-          const token = jsonwebtoken.sign({}, JWT_SECRET, {
+          const token = jsonwebtoken.sign({}, JWT_PRIVATE_KEY, {
             subject: result._id.toString(),
             expiresIn: 60 * 60 * 24 * 30 * 6,
             algorithm: 'RS256'

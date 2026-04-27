@@ -1,5 +1,5 @@
 const jsonwebtoken = require('jsonwebtoken');
-const JWT_SECRET = require('../config/keys').JWT_SECRET;
+const { JWT_PUBLIC_KEY } = require('../config/keys');
 
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
@@ -7,7 +7,7 @@ const authenticateToken = (req, res, next) => {
 
   if (token == null) return res.sendStatus(401); // No token present
 
-  jsonwebtoken.verify(token, JWT_SECRET, (err, data) => {
+  jsonwebtoken.verify(token, JWT_PUBLIC_KEY, { algorithms: ['RS256'] }, (err, data) => {
     if (err) return res.sendStatus(403); // Invalid token
 
     req.sub = data.sub; // Set the user id in the request
