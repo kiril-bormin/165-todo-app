@@ -14,7 +14,7 @@ const isDark = useDark({
 
 const props = defineProps({
   modelValue: {
-    type: String,
+    type: [Date, String],
     default: null
   },
   name: {
@@ -40,8 +40,8 @@ const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 const emit = defineEmits(['update:modelValue']);
 
 const value = computed({
-  get: () => props.modelValue.toString() || null,
-  set: (newValue) => emit('update:modelValue', newValue?.toString())
+  get: () => props.modelValue || null,
+  set: (newValue) => emit('update:modelValue', newValue || null)
 });
 </script>
 
