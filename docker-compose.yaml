@@ -36,9 +36,13 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+      MONGO_APP_PASSWORD: ${MONGO_APP_PASSWORD}
+      MONGO_ADMIN_PASSWORD: ${MONGO_ADMIN_PASSWORD}
+      MONGO_BACKUP_PASSWORD: ${MONGO_BACKUP_PASSWORD}
     volumes:
       - mongo_data:/data/db
       - ./data/mongo:/backupdb
+      - ./data/mongo/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
 
 volumes:
   db_data:
