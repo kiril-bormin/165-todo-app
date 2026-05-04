@@ -1,65 +1,67 @@
-# Docker Services
+# Docker - Services du projet
 
-To run this application, you need the MySQL service.
+Ce document résume le démarrage local du projet avec Docker Compose.
 
-As part of this project, you'll need to modify the Node/Express backend to use the MongoDB NoSQL Document database instead of MySQL.
+## Services
 
-You'll also be implementing a frontend page cache using the Redis key-value NoSQL database.
+- `mongo` : base de données MongoDB
+- `redis` : cache applicatif
+- `backend` : API Node.js / Express
+- `frontend` : interface Vue 3
 
-## Environment Variables
+## Variables d'environnement
 
-All service credentials are configured via the `.env` file at the project root. Docker Compose loads this file automatically.
+Toutes les valeurs sont lues depuis le fichier `.env` à la racine du projet.
 
-To get started, copy the example file and adjust values as needed:
+Pour partir de la configuration par défaut :
 
-```sh
+```bash
 cp .env.example .env
 ```
 
-## Starting and Stopping Services
+Les variables importantes sont :
 
-To easily install and start these 3 services under Docker on your PC, run the following command:
+| Variable                | Rôle                                     |
+| ----------------------- | ---------------------------------------- |
+| `MONGO_ROOT_USERNAME`   | utilisateur root MongoDB                 |
+| `MONGO_ROOT_PASSWORD`   | mot de passe root MongoDB                |
+| `MONGO_APP_PASSWORD`    | mot de passe de l'utilisateur applicatif |
+| `MONGO_ADMIN_PASSWORD`  | mot de passe de l'administrateur MongoDB |
+| `MONGO_BACKUP_PASSWORD` | mot de passe de l'utilisateur backup     |
+| `REDIS_PASSWORD`        | mot de passe Redis                       |
 
-```sh
+## Démarrage
+
+```bash
 docker compose up -d
 ```
 
-To stop the services, run the following command:
+## Arrêt
 
-```sh
+```bash
 docker compose down
 ```
 
-The 3 services store their respective database data in Docker volumes.
+## Réinitialisation complète
 
-To stop the services and also delete the Docker volumes, run the following command:
+Cette commande supprime aussi les volumes Docker :
 
-```sh
+```bash
 docker compose down -v
 ```
 
-## Default Credentials
+## Données persistantes
 
-The default credentials are defined in `.env`. See `.env.example` for the full list of variables.
+Les données MongoDB et Redis sont stockées dans des volumes Docker. Elles restent donc disponibles après un simple `down`.
 
-### MySQL
+## Vérification
 
-| Variable           | Default        |
-| ------------------ | -------------- |
-| `DB_ROOT_PASSWORD` | `admin_pwd`        |
-| `DB_DATABASE`      | `db_todoapp`   |
-| `DB_USER`          | `app_user`     |
-| `DB_PASSWORD`      | `app_pwd` |
+Le script suivant permet de vérifier la configuration MongoDB après le démarrage :
 
-### MongoDB
+```bash
+./scripts/verify-mongodb.sh
+```
 
-| Variable              | Default |
-| --------------------- | ------- |
-| `MONGO_ROOT_USERNAME` | `admin_user`  |
-| `MONGO_ROOT_PASSWORD` | `admin_pwd` |
+## Valeurs par défaut
 
-### Redis
-
-| Variable         | Default |
-| ---------------- | ------- |
-| `REDIS_PASSWORD`| `admin_pwd` |
+Les valeurs exactes sont documentées dans `.env.example`. Il faut les changer si le projet est déployé hors environnement local.
