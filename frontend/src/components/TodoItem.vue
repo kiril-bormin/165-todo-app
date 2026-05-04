@@ -17,7 +17,7 @@ const props = defineProps({
     required: true
   },
   todoId: {
-    type: Number,
+    type: String,
     required: true
   },
   todoCompleted: {
@@ -27,12 +27,12 @@ const props = defineProps({
 });
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const toggleTodoCompleted = async (id: any, completed: boolean) => {
+const toggleTodoCompleted = async (id: string, completed: boolean) => {
   await todoStore.updateTodo(id, { completed: completed });
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const deleteTodoItem = async (id: any) => {
+const deleteTodoItem = async (id: string) => {
   await todoStore.deleteTodo(id);
 };
 
