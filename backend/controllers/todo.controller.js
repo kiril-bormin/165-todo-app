@@ -1,3 +1,33 @@
+const canUseRedis = (redisClient) => Boolean(redisClient && (redisClient.isReady || redisClient.isOpen));
+
+const safeRedisGet = async (redisClient, key) => {
+  if (!canUseRedis(redisClient)) return null;
+  try {
+    return await redisClient.get(key);
+  } catch (error) {
+    console.warn('REDIS GET ERROR:', error);
+    return null;
+  }
+};
+
+const safeRedisSet = async (redisClient, key, value, ttlSeconds) => {
+  if (!canUseRedis(redisClient)) return;
+  try {
+    await redisClient.setEx(key, ttlSeconds, value);
+  } catch (error) {
+    console.warn('REDIS SET ERROR:', error);
+  }
+};
+
+const safeRedisDel = async (redisClient, key) => {
+  if (!canUseRedis(redisClient)) return;
+  try {
+    await redisClient.del(key);
+  } catch (error) {
+    console.warn('REDIS DEL ERROR:', error);
+  }
+};
+
 const TodoController = {
   createTodo: async (req, res) => {
     const user_id = req.sub;
@@ -15,9 +45,7 @@ const TodoController = {
       const result = await todo.save();
 
       // Invalidate cache
-      if (redisClient) {
-        await redisClient.del(`todos:${user_id}`);
-      }
+      await safeRedisDel(redisClient, `todos:${user_id}`);
 
       return res.status(201).json(result);
     } catch (error) {
@@ -32,18 +60,14 @@ const TodoController = {
 
     try {
       const cacheKey = `todos:${user_id}`;
-      if (redisClient) {
-        const cached = await redisClient.get(cacheKey);
-        if (cached) {
-          return res.status(200).json(JSON.parse(cached));
-        }
+      const cached = await safeRedisGet(redisClient, cacheKey);
+      if (cached) {
+        return res.status(200).json(JSON.parse(cached));
       }
 
       const result = await Todo.find({ user_id: user_id }).sort({ date: 1 }).select('-user_id');
       if (result) {
-        if (redisClient) {
-          await redisClient.setEx(cacheKey, 300, JSON.stringify(result)); // Cache for 5 minutes
-        }
+        await safeRedisSet(redisClient, cacheKey, JSON.stringify(result), 300);
         return res.status(200).json(result);
       } else {
         return res.status(404);
@@ -69,9 +93,7 @@ const TodoController = {
         await todo.save();
 
         // Invalidate cache
-        if (redisClient) {
-          await redisClient.del(`todos:${user_id}`);
-        }
+        await safeRedisDel(redisClient, `todos:${user_id}`);
 
         return res.status(200).json(todo);
       } else {
@@ -92,9 +114,7 @@ const TodoController = {
       await Todo.findOneAndDelete({ _id: todo_id, user_id: user_id });
 
       // Invalidate cache
-      if (redisClient) {
-        await redisClient.del(`todos:${user_id}`);
-      }
+      await safeRedisDel(redisClient, `todos:${user_id}`);
 
       return res.status(200).json({ id: todo_id });
     } catch (error) {
@@ -110,11 +130,9 @@ const TodoController = {
 
     try {
       const cacheKey = `search:${user_id}:${query}`;
-      if (redisClient) {
-        const cached = await redisClient.get(cacheKey);
-        if (cached) {
-          return res.status(200).json(JSON.parse(cached));
-        }
+      const cached = await safeRedisGet(redisClient, cacheKey);
+      if (cached) {
+        return res.status(200).json(JSON.parse(cached));
       }
 
       const result = await Todo.find({
@@ -125,9 +143,7 @@ const TodoController = {
         .select('-user_id');
 
       if (result) {
-        if (redisClient) {
-          await redisClient.setEx(cacheKey, 300, JSON.stringify(result));
-        }
+        await safeRedisSet(redisClient, cacheKey, JSON.stringify(result), 300);
         return res.status(200).json(result);
       } else {
         return res.status(404);
