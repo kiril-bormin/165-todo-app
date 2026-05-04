@@ -105,7 +105,7 @@ const clearSearchTodo = async () => {
         </form>
       </div>
       <template v-if="loading">
-        <AppSpinner class="w-8 h-8"/>
+        <AppSpinner class="w-8 h-8" />
       </template>
       <template v-else>
         <ul role="list" class="mt-2 flex flex-col list-none">

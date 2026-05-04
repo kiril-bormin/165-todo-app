@@ -87,7 +87,9 @@ const TodoController = {
     try {
       const todo = await Todo.findOne({ _id: todo_id, user_id: user_id });
       if (todo) {
-        todo.completed = data.completed !== undefined ? data.completed : false;
+        if (data.completed !== undefined) {
+          todo.completed = data.completed;
+        }
         todo.text = data.text || todo.text;
         todo.date = data.date || todo.date;
         await todo.save();
@@ -111,7 +113,10 @@ const TodoController = {
     const redisClient = req.app.locals.redisClient;
 
     try {
-      await Todo.findOneAndDelete({ _id: todo_id, user_id: user_id });
+      const deletedTodo = await Todo.findOneAndDelete({ _id: todo_id, user_id: user_id });
+      if (!deletedTodo) {
+        return res.status(404);
+      }
 
       // Invalidate cache
       await safeRedisDel(redisClient, `todos:${user_id}`);

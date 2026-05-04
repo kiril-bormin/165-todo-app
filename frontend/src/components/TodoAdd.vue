@@ -8,7 +8,7 @@ import AppSpinner from '@/components/AppSpinner.vue';
 
 const todoStore = useTodo();
 const text = ref('');
-const date = ref<Date | null>(new Date());
+const date = ref('');
 const loading = ref(false);
 const errorMsg = ref('');
 const errorDate = ref(false);
@@ -23,13 +23,13 @@ const onSubmit = async () => {
       return;
   }
   try {
-    const todoForm: TodoForm = { date: date.value ?? new Date(), text: text.value.trim() };
+    const todoForm: TodoForm = { date: new Date(date.value), text: text.value.trim() };
     loading.value = true;
     await todoStore.createTodo(todoForm);
 
     // clear form after successful submission
     text.value = '';
-    date.value = new Date();
+    date.value = '';
   } catch (e) {
     errorMsg.value = (e as { error: string }).error || 'Une erreur est survenue';
   } finally {
