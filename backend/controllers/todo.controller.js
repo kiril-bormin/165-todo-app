@@ -1,4 +1,4 @@
-const canUseRedis = (redisClient) => Boolean(redisClient && (redisClient.isReady || redisClient.isOpen));
+const canUseRedis = (redisClient) => Boolean(redisClient && redisClient.isReady);
 
 const safeRedisGet = async (redisClient, key) => {
   if (!canUseRedis(redisClient)) return null;
