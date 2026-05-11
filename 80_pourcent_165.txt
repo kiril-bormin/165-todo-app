@@ -1,0 +1,85 @@
+1. Livrables et organisation GitHub
+2. Migration MongoDB / Mongoose
+3. Recherche Todo MongoDB
+4. Cache Redis
+5. Utilisateurs MongoDB et permissions
+6. Backup / Restore
+7. Fonctionnement global frontend/backend
+8. Documentation README
+9. Qualité du code et revue finale
+10. Usage de l’IA
+
+=============================================================================================================================================================
+A. Checklist élève (A / PA / NA)
+A.1 Migration MongoDB
+Critère				A	PA	NA
+-------
+Sequelize supprimé		A	☐	☐
+Mongoose utilisé		A	☐	☐
+MongoDB fonctionnel		A	☐	☐
+CRUD Todo fonctionnel		A	☐	☐
+CRUD User fonctionnel		A	☐	☐
+Frontend toujours compatible	A	☐	☐
+Recherche MongoDB fonctionnelle	A	☐	☐
+
+A.2 Redis
+Critère				A	PA	NA
+-------
+Redis connecté			A	☐	☐
+Cache réellement utilisé	A	☐	☐
+TTL présent			A	☐	☐
+Cache invalidé correctement	A	☐	☐
+
+A.3 Utilisateurs MongoDB
+Critère					A	PA	NA
+-------
+app_backend créé			A	☐	☐
+admin_app créé				A	☐	☐
+backup_user créé			A	☐	☐
+Permissions correctes			A	☐	☐
+Script mongo-init.js fonctionnel	A	☐	☐
+
+A.4 Backup / Restore
+Critère				A	PA	NA
+-------
+Commande mongodump correcte	A	☐	☐
+Compression gzip utilisée	A	☐	☐
+Restore documenté		A	☐	☐
+
+A.5 GitHub / README
+Critère				A	PA	NA
+-------
+Repo correctement nommé		A	☐	☐
+Release présente		A	☐	☐
+README complet			A	☐	☐
+Commits atomiques		A	☐	☐
+Conventional Commits		A	☐	☐
+
+
+=========================================================================================================================================================
+B. Livrables attendus
+Livrable				Vérification
+--------				------------
+Repo GitHub privé 165-todo-app		obligatoire ok
+Release GitHub				obligatoire ok 
+README.md complet			obligatoire ok
+Docker Compose fonctionnel		obligatoire ok 
+Script mongo-init.js			obligatoire ok 
+Documentation IA			obligatoire ok 
+
+=======================================================================================================================================================
+C-Structure README attendue
+-------------------------
+Le README doit contenir :
+
+1. Description projet
+2. Technologies
+3. Installation locale
+4. Docker
+5. Variables environnement
+6. MongoDB users / permissions
+7. Backup / Restore
+8. Usage IA
+9. Conclusion
+
+ok
