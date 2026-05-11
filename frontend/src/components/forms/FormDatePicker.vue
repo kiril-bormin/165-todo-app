@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { useDark } from '@vueuse/core';
-import { frCH } from "date-fns/locale"
+import { frCH } from 'date-fns/locale';
 import { VueDatePicker } from '@vuepic/vue-datepicker';
 
 import '@vuepic/vue-datepicker/dist/main.css';
@@ -48,6 +48,7 @@ const value = computed({
     :dark="isDark"
     timezone="utc"
     :min-date="minDate"
+    model-type="format"
     :time-config="{ enableTimePicker: false }"
     :clearable="false"
     position="left"

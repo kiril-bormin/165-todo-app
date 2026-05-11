@@ -16,10 +16,17 @@ if (isTest) {
   // Assuming DB_URL is MongoDB connection string
   db = mongoose.createConnection(process.env.DB_URL);
 
-  redisClient = redis.createClient({
-    host: 'localhost',
-    port: 6379,
-    password: process.env.REDIS_PASSWORD
+  db.on('error', (error) => {
+    console.error('MONGO CONNECTION ERROR:', error);
+  });
+
+  const redisUrl = process.env.REDIS_PASSWORD
+    ? `redis://:${process.env.REDIS_PASSWORD}@localhost:6379`
+    : 'redis://localhost:6379';
+
+  redisClient = redis.createClient({ url: redisUrl });
+  redisClient.on('error', (error) => {
+    console.error('REDIS CLIENT ERROR:', error);
   });
   redisClient.connect().catch(console.error);
 }
