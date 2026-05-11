@@ -6,16 +6,16 @@ Une application complète de gestion de tâches moderne utilisant une architectu
 
 ---
 
-##  Description
+## Description
 
 **todo-app** est une application web permettant aux utilisateurs de :
 
--  Créer, modifier et supprimer des tâches
--  Gérer les tâches par date
--  Rechercher parmi les tâches (recherche full-text MongoDB)
--  Gérer leur profil utilisateur
--  Basculer entre thème clair et sombre
--  Authentification sécurisée avec JWT
+- Créer, modifier et supprimer des tâches
+- Gérer les tâches par date
+- Rechercher parmi les tâches (recherche full-text MongoDB)
+- Gérer leur profil utilisateur
+- Basculer entre thème clair et sombre
+- Authentification sécurisée avec JWT
 
 ---
 
@@ -45,7 +45,7 @@ Une application complète de gestion de tâches moderne utilisant une architectu
 
 ---
 
-##  Installation Locale
+## Installation Locale
 
 ### Prérequis
 
@@ -126,13 +126,6 @@ cd frontend
 npm run dev
 # lien: http://localhost:5173
 ```
----
-
-### Pour vérifier la Santé de MongoDB
-
-```bash
-./scripts/verify-mongodb.sh
-```
 
 ---
 
@@ -155,47 +148,46 @@ npm run dev
 | **admin_app**   | `dbAdmin`, `userAdmin` | Admin limité + création utilisateurs | Maintenance        |
 | **backup_user** | `read`                 | Lecture seule globale                | Sauvegarde/Restore |
 
-
 ### Initialisation MongoDB
 
 Le fichier `data/mongo/docker-entrypoint-initdb.d/mongo-init.js` initialise automatiquement :
-- Base de données `db_todoapp`  
-- Collections avec schémas de validation  
-- Indexes (recherche texte, performance)  
+
+- Base de données `db_todoapp`
+- Collections avec schémas de validation
+- Indexes (recherche texte, performance)
 - 3 utilisateurs avec rôles
 
 Voir [README-MONGODB.md](./README-MONGODB.md) pour les détails complets.
 
 ---
 
-##  Usage de l'IA
+## Usage de l'IA
 
 ### Choses sur lesquels j'ai utilisé de l'IA
 
 #### 1. **Backend**
 
--  Schémas Mongoose avec validation
--  Routes API Express
-
+- Schémas Mongoose avec validation
+- Routes API Express
 
 #### 2. **Configuration Docker**
 
--  Script mongo-init.js
+- Script mongo-init.js
 
 #### 3. **Documentation & Commandes**
 
--  README
--  Commandes MongoDB
+- README
+- Commandes MongoDB
 
 ---
 
-##  Sécurité de l'app
+## Sécurité de l'app
 
-- Mots de passe hachés (bcrypt)  
-- JWT pour authentification sans état  
-- Permissions MongoDB granulaires  
-- Variables d'environnement pour secrets  
-- Validation de schéma MongoDB  
+- Mots de passe hachés (bcrypt)
+- JWT pour authentification sans état
+- Permissions MongoDB granulaires
+- Variables d'environnement pour secrets
+- Validation de schéma MongoDB
 - Middleware d'authentification Express
 
 ---

@@ -19,8 +19,8 @@ const onSubmit = async () => {
   errorText.value = !text.value.trim();
   errorDate.value = !date.value;
   if (!date.value || !text.value.trim()) {
-      errorMsg.value = 'Veuillez renseigner tous les champs';
-      return;
+    errorMsg.value = 'Veuillez renseigner tous les champs';
+    return;
   }
   try {
     const todoForm: TodoForm = { date: new Date(date.value), text: text.value.trim() };
@@ -61,13 +61,13 @@ const onSubmit = async () => {
             mode="date"
             name="date"
             :error="errorDate"
-            placeholder="jj/mm/aaaa"
+            placeholder="mm/jj/aaaa"
             class="mb-4"
           />
-          <FormEditor 
-            v-model="text" 
-            :error="errorText" 
-            placeholder="Description ..." 
+          <FormEditor
+            v-model="text"
+            :error="errorText"
+            placeholder="Description ..."
             class="mb-4"
           />
           <button
