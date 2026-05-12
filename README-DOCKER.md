@@ -35,33 +35,3 @@ Les variables importantes sont :
 ```bash
 docker compose up -d
 ```
-
-## Arrêt
-
-```bash
-docker compose down
-```
-
-## Réinitialisation complète
-
-Cette commande supprime aussi les volumes Docker :
-
-```bash
-docker compose down -v
-```
-
-## Données persistantes
-
-Les données MongoDB et Redis sont stockées dans des volumes Docker. Elles restent donc disponibles après un simple `down`.
-
-## Vérification
-
-Le script suivant permet de vérifier la configuration MongoDB après le démarrage :
-
-```bash
-./scripts/verify-mongodb.sh
-```
-
-## Valeurs par défaut
-
-Les valeurs exactes sont documentées dans `.env.example`. Il faut les changer si le projet est déployé hors environnement local.
