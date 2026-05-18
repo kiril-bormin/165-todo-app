@@ -32,32 +32,24 @@ mongodb://backup_user:backup_user_secure_password@localhost:27017/db_todoapp?aut
 ## Sauvegarde
 
 ```bash
-mongodump \
-  --uri="mongodb://backup_user:backup_user_secure_password@localhost:27017/db_todoapp?authSource=db_todoapp" \
-  --out=/backupdb/dump_$(date +%Y%m%d_%H%M%S)
+docker exec mongo mongodump \
+  --username backup_user \
+  --password backup_user_secure_password \
+  --authenticationDatabase admin \
+  --db db_todoapp \
+  --archive=//backupdb/todo-backup.gz \
+  --gzip
 ```
 
 ## Restauration
 
 ```bash
-mongorestore \
-  --uri="mongodb://app_backend:app_backend_secure_password@localhost:27017/db_todoapp?authSource=db_todoapp" \
-  --dir=/backupdb/dump_20260504_143025 \
+docker exec mongo mongorestore \
+  --username app_backend \
+  --password app_backend_secure_password \
+  --authenticationDatabase db_todoapp \
+  --db db_todoapp \
+  --archive=//backupdb/todo-backup.gz \
+  --gzip \
   --drop
 ```
-
-## Vérification
-
-Après le démarrage, le script de vérification peut être lancé avec :
-
-```bash
-./scripts/verify-mongodb.sh
-```
-
-Il contrôle la présence du conteneur MongoDB, la connexion et les utilisateurs créés.
-
-## Remarques
-
-- les mots de passe sont lus depuis `.env`
-- les volumes Docker conservent les données entre deux démarrages
-- pour réinitialiser complètement, utiliser `docker compose down -v`
